@@ -1,0 +1,56 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    background-image: url('/public/images/healthcare_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom left;
+    background-attachment: fixed;
+    background-blend-mode: soft-light;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+.input-block input {
+    border-radius: 5px;
+    border: 1px solid #aaa;
+}
+
+.btn {
+    @apply px-8 py-2 rounded text-white border border-blue-300
+}
+
+.btn.primary {
+    @apply bg-blue-600
+}
+
+.btn.warning {
+    @apply bg-yellow-600
+}
+
+.bg-blur {
+    backdrop-filter: blur(20px);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+    @apply bg-transparent rounded border border-blue-300
+}
+
+.input-group label {
+    @apply font-bold
+}
