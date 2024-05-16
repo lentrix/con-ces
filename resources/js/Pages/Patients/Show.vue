@@ -5,12 +5,7 @@
         <template #header>
             <div class="flex justify-start items-center">
                 <h2 class="font-semibold text-xl text-white leading-tight flex-1">Patient View</h2>
-                <form @submit.prevent="search">
-
-                    <input type="text" v-model="searchForm.key"
-                        class="rounded-full bg-transparent min-w-[270px] border-1 border-gray-400 text-gray-400 pe-8" >
-                    <i class="fa fa-search search text-gray-400"></i>
-                </form>
+                <SearchForm />
             </div>
         </template>
 
@@ -91,18 +86,11 @@
 <script setup>
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import SearchForm from '@/Components/SearchForm.vue';
 
 const props = defineProps({
     patient: Object
 })
-
-const searchForm = useForm({
-    key:''
-})
-
-function search() {
-    searchForm.post('/patients/search')
-}
 
 function attemptDelete(id) {
     let deleteConfirmation = confirm("You are about to delete this service record. Shall we proceed?")
@@ -113,17 +101,3 @@ function attemptDelete(id) {
 }
     
 </script>
-
-<style scoped>
-form {
-    position: relative;
-}
-
-.search {
-    position: absolute;
-    right: 10px;
-    top: 12px;
-}
-
-
-</style>

@@ -5,12 +5,7 @@
         <template #header>
             <div class="flex justify-start items-center">
                 <h2 class="font-semibold text-xl text-white leading-tight flex-1">Patients</h2>
-                <form @submit.prevent="search">
-
-                    <input type="text" v-model="searchForm.key"
-                        class="rounded-full bg-transparent min-w-[300px] border-1 border-gray-400 text-gray-400 pe-8" >
-                    <i class="fa fa-search search text-gray-400"></i>
-                </form>
+                <SearchForm />
             </div>
         </template>
 
@@ -65,14 +60,20 @@
 
                         <div class="input-group mb-3">
                             <label for="height">Height (cm)</label>
-                            <input type="text" id="height" v-model="patientForm.height" required>
+                            <input type="text" id="height" v-model="patientForm.height" required @change="computeBMI">
                             <div class="text-red-600" v-if="patientForm.errors.height">{{ patientForm.errors.height}}</div>
                         </div>
                         
                         <div class="input-group mb-3">
                             <label for="weight">Weight (kilos)</label>
-                            <input type="text" id="weight" v-model="patientForm.weight" required>
+                            <input type="text" id="weight" v-model="patientForm.weight" required @change="computeBMI">
                             <div class="text-red-600" v-if="patientForm.errors.weight">{{ patientForm.errors.weight}}</div>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <label for="weight">BMI</label>
+                            <input type="text" id="weight" v-model="patientForm.bmi" required>
+                            <div class="text-red-600" v-if="patientForm.errors.bmi">{{ patientForm.errors.bmi}}</div>
                         </div>
 
                         <button class="btn btn-primary" type="submit">Submit</button>
@@ -84,12 +85,9 @@
 </template>
 
 <script setup>
+import SearchForm from '@/Components/SearchForm.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Link, Head, useForm, router } from '@inertiajs/vue3';
-
-    const searchForm = useForm({
-        key:''
-    })
+import { Head, useForm, router } from '@inertiajs/vue3';
 
     const patientForm = useForm({
         last_name: null,
@@ -100,27 +98,20 @@ import { Link, Head, useForm, router } from '@inertiajs/vue3';
         phone: null,
         height: null,
         weight: null,
+        bmi: null,
         case_no: null,
     })
-
-    function search() {
-        searchForm.post('/patients/search')
-    }
 
     function submit() {
         patientForm.post('/patients')
     }
 
+    function computeBMI() {
+        if(patientForm.height>0 && patientForm.weight>0) {
+            const bmi = (patientForm.weight / (patientForm.height*patientForm.height)) * 10000
+
+            patientForm.bmi = bmi.toFixed(2)
+        }
+    }
+
 </script>
-
-<style scoped>
-form {
-    position: relative;
-}
-
-.search {
-    position: absolute;
-    right: 10px;
-    top: 12px;
-}
-</style>

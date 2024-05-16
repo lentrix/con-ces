@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import SearchForm from '@/Components/SearchForm.vue';
 import { Head } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 
@@ -15,11 +16,14 @@ onMounted(()=>console.log(props.data))
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-white leading-tight">Dashboard</h2>
+            <div class="flex justify-start items-center">
+                <h2 class="font-semibold text-xl text-white leading-tight flex-1">Dashboard</h2>
+                <SearchForm />
+            </div>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-4">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-4 z-10">
                 <div class="bg-blur overflow-hidden shadow-sm sm:rounded-lg mb-4">
                     <div class="p-6 text-gray-300 flex flex-col items-center justify-center">
                         <h2 class="text-3xl">
